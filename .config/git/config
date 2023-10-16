@@ -1,0 +1,22 @@
+[core]
+# Set default text editor to nano (recommendation: change to code, vim, or nvim)
+  editor = nano
+  autocrlf = input
+  safecrlf = true
+[init]
+  defaultBranch = main
+[alias]
+  hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+  root = rev-parse --show-toplevel
+[merge "ours"]
+  driver = true
+[pull]
+  rebase = false
+[push]
+  default = matching
+[commit]
+  verbose = true
+[credential "https://github.com"]
+  helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+  helper = !gh auth git-credential
