@@ -108,8 +108,16 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+ alias v="nvim"
+ alias zshconfig="nvim ~/.zshrc"
+ alias ohmyzsh="nvim ~/.oh-my-zsh"
+ alias activate="source .venv/bin/activate"
+ alias repo="cd ~/Desktop/Repositories"
+ alias gst="git status"
+ alias gd="git diff"
+ alias gc="git commit"
+ alias gaa="git add ."
+ alias gp="git push"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -118,6 +126,10 @@ source $ZSH/oh-my-zsh.sh
 
 function include() {
   [[ -f "$1" ]] && source "$1"
+}
+
+function klone () {
+  git clone "https://github.com/KeplerGroup/$1.git"
 }
 
 include "$HOME/.config/sensitive/secrets.sh"
