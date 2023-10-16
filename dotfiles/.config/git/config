@@ -1,6 +1,6 @@
 [core]
 # Set default text editor to nano (recommendation: change to code, vim, or nvim)
-  editor = nano
+  editor = nvim
   autocrlf = input
   safecrlf = true
 [init]
