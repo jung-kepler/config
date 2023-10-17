@@ -6,29 +6,62 @@
 [colors]
 
   [colors.primary]
-  background = "#F2EEDE"
-  foreground = "#000000"
-
+  background = '#011627'
+  foreground = '#bdc1c6'
+  bright_foreground = '#eeeeee'
+  
   [colors.normal]
-  black = "#000000"
-  red = "#CC3E28"
-  green = "#216609"
-  yellow = "#B58900"
-  blue = "#1E6FCC"
-  magenta = "#5C21A5"
-  cyan = "#158C86"
-  white = "#AAAAAA"
+  black = '#1d3b53'
+  red = '#fc514e'
+  green = '#a1cd5e'
+  yellow = '#e3d18a'
+  blue = '#82aaff'
+  magenta = '#c792ea'
+  cyan = '#7fdbca'
+  white = '#a1aab8'
 
   [colors.bright]
-  black = "#555555"
-  red = "#CC3E28"
-  green = "#216609"
-  yellow = "#B58900"
-  blue = "#1E6FCC"
-  magenta = "#5C21A5"
-  cyan = "#158C86"
-  white = "#AAAAAA"
+  black = '#7c8f8f'
+  red = '#ff5874'
+  green = '#21c7a8'
+  yellow = '#ecc48d'
+  blue = '#82aaff'
+  magenta = '#ae81ff'
+  cyan = '#7fdbca'
+  white = '#d6deeb'
+
+  [colors.cursor]
+  text = '#080808'
+  cursor = '#9ca1aa'
+
+  [colors.selection]
+  text = '#080808'
+  background = '#b2ceee'
+
+[font]
+
+  # Normal (roman) font face
+  [font.normal]
+    # Font family
+    family = "JetBrainsMono Nerd Font"
+    style = "Bold"
+
+  # Bold font face
+  [font.bold]
+    style = "ExtraBold"
+
+  # Italic font face
+  [font.italic]
+    style = "Bold Italic"
+
+  # Bold italic font face
+  [font.bold_italic]
+    style = "ExtraBold Italic"
+
+  # Point size
+  size = 11.0
+
 
 [shell]
-    program = "/usr/bin/env"
-    args = ["sh", "-c", "tmux"]
+  program = "/usr/bin/env"
+  args = ["sh", "-c", "tmux"]
