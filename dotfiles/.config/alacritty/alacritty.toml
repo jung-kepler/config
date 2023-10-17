@@ -58,10 +58,6 @@
   [font.bold_italic]
     style = "ExtraBold Italic"
 
-  # Point size
-  size = 11.0
-
-
 [shell]
   program = "/usr/bin/env"
   args = ["sh", "-c", "tmux"]
