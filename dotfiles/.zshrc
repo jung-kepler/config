@@ -107,17 +107,27 @@ source $ZSH/oh-my-zsh.sh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-# Example aliases
+#--- ALIASES ---#
+ #--- VIM
  alias v="nvim"
+ #--- ZSH
  alias zshconfig="nvim ~/.zshrc"
  alias ohmyzsh="nvim ~/.oh-my-zsh"
+ alias rzsh="source ~/.zshrc"
+ #--- VENV
  alias activate="source .venv/bin/activate"
- alias repo="cd ~/Desktop/Repositories"
+ alias cvenv="python -m venv .venv"
+ #--- FOLDERS
+ alias configs="cd ~/Desktop/Repositories/config/dotfiles"
+ alias r="cd ~/Desktop/Repositories"
+ #--- GIT
  alias gst="git status"
  alias gd="git diff"
  alias gc="git commit"
  alias gaa="git add ."
  alias gp="git push"
+ alias glog="git log --oneline --graph"
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
