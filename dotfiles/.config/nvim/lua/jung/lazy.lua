@@ -13,6 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   { import = "jung.plugins" },
+  { import = "jung.plugins.lsp"},
 --  {
 --    install = {
 --      colorscheme = { "nightfly" },
