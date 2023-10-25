@@ -208,6 +208,59 @@ function pull() { # current branch from origin to current branch
   git pull origin "$current_branch"
 }
 
+nth_row () {
+        local filename=$(basename -- "$1")
+        local extension="${filename##*.}"
+        local local_filename="fiq.${filename}"
+        aws s3 cp $1 $local_filename
+        local proceed=true
+        local comp_type=$(file $local_filename)
+        if [[ "$comp_type" == *"bzip2"* ]]
+        then
+                bzip2 -d $local_filename
+                local local_filename=${local_filename%.*}
+        elif [[ "$comp_type" == *"gzip"* ]]
+        then
+                gunzip $local_filename
+                local local_filename=${local_filename%.*}
+        else
+                if [[ $extension != "csv" && $extension != "tsv" && $extension != "json" ]]
+                then
+                        tput setaf 1
+                        echo -e "Attention: this file is of $extension extension!"
+                        echo -e "Can't deal with '$comp_type' this type of file yet!"
+                        proceed=false
+                fi
+        fi
+        if [[ $proceed = "true" ]]
+        then
+                local txt_type=$(file $local_filename)
+                local total_lines=$(wc -l < $local_filename)
+                if (( $2 > $total_lines ))
+                then
+                        tput setaf 1
+                        echo -e "The line you want to see exceed total lines $total_lines"
+                        proceed=false
+                else
+                        echo "========== See data below =========="
+                        if [[ "$txt_type" == *"JSON"* ]]
+                        then
+                                sed "${2}q;d" $local_filename | jq
+                        else
+                                sed "${2}q;d" $local_filename
+                        fi
+                fi
+        fi
+        if [ -f $local_filename ]
+        then
+                rm $local_filename
+        fi
+        if [[ $proceed = "false" ]]
+        then
+                false
+        fi
+}
+
 # }}}
 # Runtime: executed commands for interactive shell {{{
 
