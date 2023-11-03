@@ -118,8 +118,8 @@ source $ZSH/oh-my-zsh.sh
  alias activate="source .venv/bin/activate"
  alias cvenv="python -m venv .venv"
  #--- FOLDERS
- alias configs="cd ~/Desktop/Repositories/config/dotfiles"
- alias r="cd ~/Desktop/Repositories"
+ alias configs="cd ~/Documents/Repositories/config/dotfiles"
+ alias r="cd ~/Documents/Repositories"
  #--- GIT
  alias gst="git status"
  alias gd="git diff"
