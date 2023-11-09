@@ -1,0 +1,3 @@
+[submodule "dotfiles/.config/alacritty/catppuccinn"]
+	path = dotfiles/.config/alacritty/catppuccinn
+	url = https://github.com/catppuccin/alacritty.git

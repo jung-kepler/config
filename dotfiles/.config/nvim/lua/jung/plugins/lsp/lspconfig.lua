@@ -70,7 +70,7 @@ return {
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
-    -- configure C server 
+    -- configure C server
     lspconfig["clangd"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
@@ -105,6 +105,15 @@ return {
     lspconfig["jsonls"].setup({
         capabilities = capabilities,
         on_attach = on_attach,
+        init_options = {
+				    settings = {
+                args = {
+                    "--line-length", "79"
+                },
+            organizeImports = true,
+            fixAll = true
+        },
+			},
     })
 
     -- configure lua server (with special settings)
@@ -135,7 +144,7 @@ return {
     })
 
     -- configure python server
-    lspconfig["pyright"].setup({
+     lspconfig["ruff_lsp"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
@@ -150,12 +159,6 @@ return {
     lspconfig["taplo"].setup({
         capabilities = capabilities,
         on_attach = on_attach,
-    })
-
-    -- configure typescript server with plugin
-    lspconfig["tsserver"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
     })
 
     -- configure YAML server

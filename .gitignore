@@ -6,3 +6,10 @@ dotfiles/.config/google-chrome/
 dotfiles/.config/mimeapps.list
 dotfiles/.config/pulse/
 dotfiles/.config/spotify/
+dotfiles/.config/enchant/
+dotfiles/.config/gedit/
+dotfiles/.config/nautilus/
+dotfiles/.config/zoom.conf
+dotfiles/.config/zoomus.conf
+dotfiles/.config/notion-app/
+dotfiles/.tool-versions
