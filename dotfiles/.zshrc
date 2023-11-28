@@ -144,5 +144,8 @@ function klone () {
 
 include "$HOME/.config/sensitive/secrets.sh"
 include "$HOME/.asdf/asdf.sh"
+include "$Home/.secrets/.zshrc"
 
+# Include Secrets
+[ -f $HOME/.secret/.zshrc ] && . $HOME/.secret/.zshrc
 # }}}

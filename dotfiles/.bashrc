@@ -208,7 +208,7 @@ function pull() { # current branch from origin to current branch
   git pull origin "$current_branch"
 }
 
-nth_row () {
+function nth_row () {
         local filename=$(basename -- "$1")
         local extension="${filename##*.}"
         local local_filename="fiq.${filename}"
