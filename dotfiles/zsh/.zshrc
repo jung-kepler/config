@@ -83,7 +83,22 @@ plugins=(
     zsh-syntax-highlighting
     )
 
+# asdf configuration
+# Optional custom data directory:
+# export ASDF_DATA_DIR="/your/custom/data/dir"
+
+# Add asdf shims to PATH (required)
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+
+# Ensure asdf completions are in fpath BEFORE compinit runs in your framework
+fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
+
 source $ZSH/oh-my-zsh.sh
+
+# Initialize Homebrew environment
+if [[ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
 
 # User configuration
 
@@ -138,14 +153,32 @@ function include() {
   [[ -f "$1" ]] && source "$1"
 }
 
-function klone () {
-  git clone "https://github.com/KeplerGroup/$1.git"
-}
-
 include "$HOME/.config/sensitive/secrets.sh"
-include "$HOME/.asdf/asdf.sh"
 include "$Home/.secrets/.zshrc"
 
 # Include Secrets
 [ -f $HOME/.secret/.zshrc ] && . $HOME/.secret/.zshrc
 # }}}
+#
+#
+
+# AWS Profile Switcher
+function aws_amer() {
+  export AWS_PROFILE=default
+  echo "AWS profile set to: $AWS_PROFILE"
+}
+
+function aws_emea() {
+  export AWS_PROFILE=emea
+  echo "AWS profile set to: $AWS_PROFILE"
+}
+
+# AWS SSO Login Shortcuts
+function sso_amer() {
+  aws sso login --profile default
+}
+
+function sso_emea() {
+  aws sso login --profile emea
+}
+export PATH="$HOME/.local/bin:$PATH"

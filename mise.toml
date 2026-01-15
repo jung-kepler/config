@@ -1,0 +1,204 @@
+# mise configuration for dotfile management
+# See: https://mise.jdx.dev
+
+[tasks.link]
+description = "Link all dotfiles to $HOME"
+run = '''
+#!/usr/bin/env bash
+set -e
+
+REPO_DIR="${MISE_PROJECT_ROOT:-$(pwd)}"
+DOTFILES_DIR="$REPO_DIR/dotfiles"
+
+# Color output
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+link_package() {
+  local package="$1"
+  local package_dir="$DOTFILES_DIR/$package"
+
+  if [ ! -d "$package_dir" ]; then
+    echo "Package $package not found, skipping..."
+    return
+  fi
+
+  echo -e "${BLUE}Linking $package...${NC}"
+
+  # Find all files in the package and create symlinks
+  cd "$package_dir"
+  find . -type f -o -type l | while read -r file; do
+    # Remove leading ./
+    file="${file#./}"
+    target="$HOME/$file"
+    source="$package_dir/$file"
+
+    # Create parent directory if needed
+    mkdir -p "$(dirname "$target")"
+
+    # Skip if already correctly linked
+    if [ -L "$target" ] && [ "$(readlink "$target")" = "$source" ]; then
+      continue
+    fi
+
+    # Create symlink
+    ln -sf "$source" "$target"
+    echo -e "  ${GREEN}✓${NC} Linked $file"
+  done
+}
+
+# Link all packages
+for package in alacritty bash git tmux mise gh zsh; do
+  link_package "$package"
+done
+
+echo -e "\n${GREEN}All dotfiles linked successfully!${NC}"
+'''
+
+[tasks.unlink]
+description = "Remove all dotfile symlinks"
+run = '''
+#!/usr/bin/env bash
+set -e
+
+REPO_DIR="${MISE_PROJECT_ROOT:-$(pwd)}"
+DOTFILES_DIR="$REPO_DIR/dotfiles"
+
+# Color output
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+unlink_package() {
+  local package="$1"
+  local package_dir="$DOTFILES_DIR/$package"
+
+  if [ ! -d "$package_dir" ]; then
+    return
+  fi
+
+  echo -e "${BLUE}Unlinking $package...${NC}"
+
+  cd "$package_dir"
+  find . -type f -o -type l | while read -r file; do
+    file="${file#./}"
+    target="$HOME/$file"
+    source="$package_dir/$file"
+
+    # Only remove if it's a symlink pointing to our source
+    if [ -L "$target" ] && [ "$(readlink "$target")" = "$source" ]; then
+      rm "$target"
+      echo -e "  ${RED}✗${NC} Unlinked $file"
+    fi
+  done
+}
+
+# Unlink all packages
+for package in alacritty bash git tmux mise gh zsh; do
+  unlink_package "$package"
+done
+
+echo -e "\n${RED}All dotfiles unlinked!${NC}"
+'''
+
+[tasks.status]
+description = "Show status of dotfile links"
+run = '''
+#!/usr/bin/env bash
+
+REPO_DIR="${MISE_PROJECT_ROOT:-$(pwd)}"
+DOTFILES_DIR="$REPO_DIR/dotfiles"
+
+# Color output
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+check_package() {
+  local package="$1"
+  local package_dir="$DOTFILES_DIR/$package"
+
+  if [ ! -d "$package_dir" ]; then
+    return
+  fi
+
+  echo -e "\n${BLUE}$package:${NC}"
+
+  cd "$package_dir"
+  find . -type f -o -type l | while read -r file; do
+    file="${file#./}"
+    target="$HOME/$file"
+    source="$package_dir/$file"
+
+    if [ -L "$target" ]; then
+      if [ "$(readlink "$target")" = "$source" ]; then
+        echo -e "  ${GREEN}✓${NC} $file (linked)"
+      else
+        echo -e "  ${YELLOW}→${NC} $file (linked elsewhere: $(readlink "$target"))"
+      fi
+    elif [ -e "$target" ]; then
+      echo -e "  ${RED}✗${NC} $file (exists but not linked)"
+    else
+      echo -e "  ${RED}○${NC} $file (not linked)"
+    fi
+  done
+}
+
+echo "Dotfiles status:"
+for package in alacritty bash git tmux mise gh zsh; do
+  check_package "$package"
+done
+'''
+
+[tasks.backup]
+description = "Backup existing dotfiles before linking"
+run = '''
+#!/usr/bin/env bash
+set -e
+
+REPO_DIR="${MISE_PROJECT_ROOT:-$(pwd)}"
+DOTFILES_DIR="$REPO_DIR/dotfiles"
+BACKUP_DIR="$REPO_DIR/.backup/$(date -u +%Y%m%d-%H%M%S)"
+
+mkdir -p "$BACKUP_DIR"
+
+# Color output
+YELLOW='\033[0;33m'
+NC='\033[0m'
+
+backup_package() {
+  local package="$1"
+  local package_dir="$DOTFILES_DIR/$package"
+
+  if [ ! -d "$package_dir" ]; then
+    return
+  fi
+
+  cd "$package_dir"
+  find . -type f -o -type l | while read -r file; do
+    file="${file#./}"
+    target="$HOME/$file"
+
+    # Backup if exists and is not already a symlink to our repo
+    if [ -e "$target" ] && ! [ -L "$target" ]; then
+      mkdir -p "$BACKUP_DIR/$(dirname "$file")"
+      cp -a "$target" "$BACKUP_DIR/$file"
+      echo -e "  ${YELLOW}↪${NC} Backed up $file"
+    fi
+  done
+}
+
+echo "Backing up existing dotfiles..."
+for package in alacritty bash git tmux mise gh zsh; do
+  backup_package "$package"
+done
+
+echo -e "\nBackup created at: $BACKUP_DIR"
+'''
+
+[tasks.install]
+description = "Full install: backup existing files and link all dotfiles"
+depends = ["backup", "link"]
