@@ -83,21 +83,17 @@ plugins=(
     zsh-syntax-highlighting
     )
 
-# asdf configuration
-# Optional custom data directory:
-# export ASDF_DATA_DIR="/your/custom/data/dir"
-
-# Add asdf shims to PATH (required)
-export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
-
-# Ensure asdf completions are in fpath BEFORE compinit runs in your framework
-fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
+# mise configuration
+# Activate mise
+eval "$(mise activate zsh)"
 
 source $ZSH/oh-my-zsh.sh
 
-# Initialize Homebrew environment
-if [[ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# Initialize Homebrew environment (macOS)
+if [[ -x "/opt/homebrew/bin/brew" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x "/usr/local/bin/brew" ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
 fi
 
 # User configuration
@@ -142,6 +138,9 @@ fi
  alias gaa="git add ."
  alias gp="git push"
  alias glog="git log --oneline --graph"
+ #--- VPN
+ alias startvpn='/Applications/Pritunl.app/Contents/Resources/pritunl-client start odx --mode=ovpn'
+ alias stopvpn='/Applications/Pritunl.app/Contents/Resources/pritunl-client stop odx'
 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -182,3 +181,6 @@ function sso_emea() {
   aws sso login --profile emea
 }
 export PATH="$HOME/.local/bin:$PATH"
+
+# Added by Antigravity
+export PATH="/Users/jungbak/.antigravity/antigravity/bin:$PATH"
