@@ -139,8 +139,8 @@ fi
  alias gp="git push"
  alias glog="git log --oneline --graph"
  #--- VPN
- alias startvpn='/Applications/Pritunl.app/Contents/Resources/pritunl-client start odx --mode=ovpn'
- alias stopvpn='/Applications/Pritunl.app/Contents/Resources/pritunl-client stop odx'
+ alias startvpn='/Applications/Pritunl.app/Contents/Resources/pritunl-client start pm-ds-us-east-1 --mode=ovpn'
+ alias stopvpn='/Applications/Pritunl.app/Contents/Resources/pritunl-client stop pm-ds-us-east-1'
 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
