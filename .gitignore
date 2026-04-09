@@ -14,6 +14,7 @@ dotfiles/.config/zoomus.conf
 dotfiles/.config/notion-app/
 dotfiles/.tool-versions
 dotfiles/.config/.gsd-keyboard.settings-ported
+dotfiles/.config/sensitive/
 dotfiles/.config/autostart/
 dotfiles/.config/evolution/
 dotfiles/.config/gnome-initial-setup-done

@@ -122,8 +122,8 @@ fi
  #--- VIM
  alias v="nvim"
  #--- ZSH
- alias zshconfig="nvim ~/.zshrc"
- alias ohmyzsh="nvim ~/.oh-my-zsh"
+ alias zshconfig="antigravity ~/.zshrc"
+ alias ohmyzsh="antigravity ~/.oh-my-zsh"
  alias rzsh="source ~/.zshrc"
  #--- VENV
  alias activate="source .venv/bin/activate"
