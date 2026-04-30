@@ -1,0 +1,81 @@
+format = """
+$directory\
+$python\
+$git_branch\
+$git_status\
+$git_metrics\
+$cmd_duration\
+$fill\
+${custom.aws_amer}\
+${custom.aws_emea}\
+$time\
+$line_break\
+$character"""
+
+[time]
+disabled = false
+format = '[$time]($style)'
+time_format = "%H:%M:%S"
+style = "bold #505050"
+
+[fill]
+symbol = "·"
+style = "#303030"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+[directory]
+truncation_length = 2
+truncate_to_repo = false
+style = "bold #6c99ba"
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+[git_branch]
+format = "[$symbol$branch]($style) "
+symbol = " "
+style = "bold #7e8d50"
+
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+style = "#e5b566"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+conflicted = "=${count}"
+untracked = "?${count}"
+stashed = '$$${count}'
+modified = "!${count}"
+staged = "+${count}"
+renamed = "»${count}"
+deleted = "✘${count}"
+
+[python]
+format = '[💻${version}]($style) '
+style = "#e5b566"
+detect_files = ["pyproject.toml", "requirements.txt", ".python-version", "main.py"]
+
+[aws]
+disabled = true
+
+[custom.aws_amer]
+command = 'echo AMER'
+when = '[ "$AWS_PROFILE" = "default" ]'
+format = '[$output]($style) '
+style = "bold red"
+
+[custom.aws_emea]
+command = 'echo EMEA'
+when = '[ "$AWS_PROFILE" = "emea" ]'
+format = '[$output]($style) '
+style = "bold blue"
+
+[cmd_duration]
+min_time = 500
+format = "took [$duration]($style) "
+style = "bold #e5b566"
+show_milliseconds = false
+
+[git_metrics]
+disabled = true
