@@ -49,7 +49,7 @@ link_package() {
 }
 
 # Link all packages
-for package in alacritty bash git tmux mise gh zsh; do
+for package in alacritty bash git kitty tmux mise gh zsh starship; do
   link_package "$package"
 done
 
@@ -95,7 +95,7 @@ unlink_package() {
 }
 
 # Unlink all packages
-for package in alacritty bash git tmux mise gh zsh; do
+for package in alacritty bash git kitty tmux mise gh zsh; do
   unlink_package "$package"
 done
 
@@ -148,7 +148,7 @@ check_package() {
 }
 
 echo "Dotfiles status:"
-for package in alacritty bash git tmux mise gh zsh; do
+for package in alacritty bash git kitty tmux mise gh zsh; do
   check_package "$package"
 done
 '''
@@ -192,7 +192,7 @@ backup_package() {
 }
 
 echo "Backing up existing dotfiles..."
-for package in alacritty bash git tmux mise gh zsh; do
+for package in alacritty bash git kitty tmux mise gh zsh; do
   backup_package "$package"
 done
 
