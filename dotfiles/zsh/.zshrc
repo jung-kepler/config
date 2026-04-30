@@ -122,6 +122,21 @@ fi
  #--- VENV
  alias activate="source .venv/bin/activate"
  alias cvenv="python -m venv .venv"
+
+# Auto-activate/deactivate Python venv on directory change
+function auto_venv() {
+  if [[ -d ".venv" && -f ".venv/bin/activate" ]]; then
+    if [[ "$VIRTUAL_ENV" != "$(pwd)/.venv" ]]; then
+      source .venv/bin/activate
+    fi
+  elif [[ -n "$VIRTUAL_ENV" ]]; then
+    deactivate
+  fi
+}
+
+autoload -U add-zsh-hook
+add-zsh-hook chpwd auto_venv
+auto_venv
  #--- FOLDERS
  alias configs="cd ~/Documents/Repositories/config/dotfiles"
  alias r="cd ~/Documents/Repositories"
@@ -171,10 +186,12 @@ function aws_emea() {
 
 # AWS SSO Login Shortcuts
 function sso_amer() {
+  export AWS_PROFILE=default
   aws sso login --profile default
 }
 
 function sso_emea() {
+  export AWS_PROFILE=emea
   aws sso login --profile emea
 }
 export PATH="$HOME/.local/bin:$PATH"
